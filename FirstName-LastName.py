@@ -33,11 +33,21 @@ Happy Scripting!
 
 © 2018 Revature. All rights reserved.
 '''
-
+import string
 '''
 Use the main function for testing purposes and to show me results for all functions.
 '''
 def main():
+	print(reverse('hello'))
+	print(acronym('Portable Network Graphics'))
+	print(whichTriangle(8,8,8))
+	print(scrabble('cabbage'))
+	print(armstrong(153))
+	print(primeFactors(12))
+	print(pangram('The quick brown fox jumps over the lazy dog'))
+	print(sort([2,4,5,1,3,1]))
+	print(rotate(5, 'omg'))
+	evenAndOdds()
 
 '''
 1. Reverse a String. Example: reverse("example"); -> "elpmaxe"
@@ -50,6 +60,7 @@ param: str
 return: str
 '''
 def reverse(string):
+	return string[len(string)-1::-1];
 
 '''
 2. Convert a phrase to its acronym. Techies love their TLA (Three Letter
@@ -60,6 +71,11 @@ param: str
 return: str
 '''
 def acronym(phrase):
+	split = phrase.split()
+	join = ''
+	for s in split:
+		join += s[0].upper()
+	return join
 
 '''
 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -73,6 +89,13 @@ param: float, float, float
 return: str -> 'equilateral', 'isoceles', 'scalene'
 '''
 def whichTriangle(sideOne, sideTwo, sideThree):
+	if sideOne == sideTwo == sideThree:
+		return 'equilateral'
+	elif sideOne == sideTwo or sideOne == sideThree or sideTwo == sideThree:
+		return 'isoceles'
+	else:
+		return 'scalene'
+	return
 
 
 '''
@@ -91,6 +114,11 @@ param: str
 return: int
 '''
 def scrabble(word):
+	scrabbleNum = 0
+	scrabbleDict = {'a':1, 'e':1,'i':1,'o':1,'u':1,'l':1,'n':1,'r':1,'s':1,'t':1, 'd':2, 'g':2, 'b':3,'c':3,'m':3,'p':3, 'f':4,'h':4,'v':4,'w':4,'y':4, 'k':5, 'j':8,'x':8, 'q':10,'z':10}
+	for letter in word:
+		scrabbleNum += scrabbleDict[letter]
+	return scrabbleNum
 
 '''
 5. An Armstrong number is a number that is the sum of its own digits each
@@ -108,6 +136,11 @@ param: int
 return: bool
 '''
 def armstrong(number):
+	strNumber = str(number)
+	result = 0
+	for num in strNumber:
+		result += int(num)**len(strNumber)
+	return number == result
 
 '''
 6. Compute the prime factors of a given natural number.
@@ -119,7 +152,16 @@ Note that 1 is not a prime number.
 param: int
 return: list
 '''
-def primeFactors(number)
+def primeFactors(number):
+	n = number
+	factorList = []
+	i = 2
+	while i <= n:
+		while n % i == 0:
+			factorList.append(i)
+			n /= i
+		i += 1
+	return factorList
 
 '''
 7. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
@@ -135,6 +177,12 @@ param: str
 return: bool
 '''
 def pangram(sentence):
+	removeSpace = ''.join(sentence.split(' '))
+	lower = removeSpace.lower()
+	removeDuplicate = ''.join(set(lower))
+	sort = ''.join(sorted(removeDuplicate))
+	print(sort)
+	return sort == string.ascii_lowercase
 
 '''
 8. Sort list of integers.
@@ -148,6 +196,12 @@ param: list
 return: list
 '''
 def sort(numbers):
+	sortedList = []
+	while numbers:
+		minNum = min(numbers)
+		indexMin = numbers.index(minNum)
+		sortedList.append(numbers.pop(indexMin))
+	return sortedList
 
 '''
 9. Create an implementation of the rotational cipher, also sometimes called
@@ -178,7 +232,17 @@ quick brown fox jumps over the lazy dog.
 param: int, str
 return: str
 '''
-def rotate(key, string):
+def rotate(key, stringx):
+	alphaString = string.ascii_lowercase
+	cleanedString = ''.join([letter for letter in stringx if letter.isalpha()]).lower()
+	resultString = ''
+	for letter in cleanedString:
+		indexLetter = alphaString.index(letter)
+		indexRotate = indexLetter + key
+		if indexRotate > 26:
+			indexRotate = indexRotate - 26
+		resultString += alphaString[indexRotate]
+	return resultString
 
 '''
 10. Take 10 numbers as input from the user and store all the even numbers in a file called even.txt and
@@ -188,6 +252,19 @@ param: none, from the keyboard
 return: nothing
 '''
 def evenAndOdds():
+	numIn = input('Enter 10 numbers (ex. 10 10 303 390 ..): ')
+	numSplit = numIn.split(' ')
+	print(numSplit)
+	evenFile = open('even.txt', 'w+')
+	oddFile = open('odd.txt', 'w+')
+	for num in numSplit:
+		if int(num) % 2 == 0:
+			evenFile.write(num + '\n')
+		else:
+			oddFile.write(num + '\n')
+	evenFile.close()
+	oddFile.close()
+	return
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     main()
