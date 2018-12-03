@@ -46,7 +46,7 @@ def main():
 	print(primeFactors(12))
 	print(pangram('The quick brown fox jumps over the lazy dog'))
 	print(sort([2,4,5,1,3,1]))
-	print(rotate(5, 'omg'))
+	print(rotate(5, 'This is a test'))
 	evenAndOdds()
 
 '''
@@ -234,14 +234,18 @@ return: str
 '''
 def rotate(key, stringx):
 	alphaString = string.ascii_lowercase
-	cleanedString = ''.join([letter for letter in stringx if letter.isalpha()]).lower()
+	cleanedString = ''.join([letter for letter in stringx if letter.isalpha() or letter == ' ']).lower()
+	print(cleanedString)
 	resultString = ''
 	for letter in cleanedString:
-		indexLetter = alphaString.index(letter)
-		indexRotate = indexLetter + key
-		if indexRotate > 26:
-			indexRotate = indexRotate - 26
-		resultString += alphaString[indexRotate]
+		if letter == ' ':
+			resultString += letter
+		else:	
+			indexLetter = alphaString.index(letter)
+			indexRotate = indexLetter + key
+			if indexRotate > 26:
+				indexRotate = indexRotate - 26
+			resultString += alphaString[indexRotate]
 	return resultString
 
 '''
